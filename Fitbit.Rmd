@@ -1,0 +1,99 @@
+---
+title: "FitBitML"
+author: "Sotero Alvarado"
+date: "Sunday, May 17, 2015"
+output: html_document
+---
+
+
+In this part we download the training and test sets.
+
+```{r}
+
+
+
+setwd("~/ML/assignment")
+
+
+library(RCurl)
+datad <- getURL("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv",
+                ssl.verifypeer=0L, followlocation=1L)
+
+datatr<- read.csv(text=datad)
+
+
+summary(datatr)
+
+datat <- getURL("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv",ssl.verifypeer=0L,followlocation=1L)
+
+data2 <- read.csv(text=datat)
+
+summary(data2)
+
+```````````````````````````````````````````````````````````````````````````````````````````
+
+Below we download all required packages and remove all columns that are all NAs. We also remove the
+X column since it was causing the model to return erroneous predictions. 
+
+
+```{r}
+# Removing all NA columns
+library("caret")
+library("e1071")
+
+
+data2 <-  Filter(function(x)!all(is.na(x)), data2)
+
+data2 <- data2[ ,-1  ]
+
+
+coln<-" "
+
+coln<- colnames(data2)
+
+coln<-c(coln,"classe")
+
+
+
+datatr <-  datatr[ ,colnames(datatr)%in%coln] 
+
+```````````````````````````````````````````
+
+Here we use cross validation.
+
+```{r}
+
+inTrain <- createDataPartition( y = datatr$classe, p = 0.6, list= F,   )
+
+training <- datatr[inTrain, ]
+testing <- datatr[-inTrain, ]
+
+#modFit <- train( classe ~ . , method = "gbm", data = training, verbose = F )
+
+#pred<-predict(modFit, newdata = testing )
+
+
+
+
+
+ 
+#confusionMatrix(testing$classe, predict(modFit, newdata = testing ) )
+
+#qplot(predict(modFit,testing),classe, data=testing)
+
+
+
+`````````````````````````````````````````````````
+
+Since our model proved quite accurate we are now able to make our predictions. I was expecting the
+error to be about 0.1 however it turned out that it was a lot my accuracy. I am guessing because I used the most accurate methond according the book and Intruduction to Statistical Learning. 
+
+We have our predictions below. 
+
+```{r}
+
+pred2<-predict(modFit, newdata = data2 )
+
+
+pred2
+```````````````````````````````````````````````````````````````
