@@ -8,7 +8,7 @@ output: html_document
 
 In this part we download the training and test sets.
 
-```{r}
+```{r,cache=TRUE}
 
 
 
@@ -35,7 +35,7 @@ Below we download all required packages and remove all columns that are all NAs.
 X column since it was causing the model to return erroneous predictions. 
 
 
-```{r}
+```{r,cache=TRUE}
 # Removing all NA columns
 library("caret")
 library("e1071")
@@ -60,7 +60,7 @@ datatr <-  datatr[ ,colnames(datatr)%in%coln]
 
 Here we use cross validation.
 
-```{r}
+```{r,cache=TRUE}
 
 inTrain <- createDataPartition( y = datatr$classe, p = 0.6, list= F,   )
 
@@ -89,7 +89,7 @@ error to be about 0.1 however it turned out that it was a lot my accuracy. I am 
 
 We have our predictions below. 
 
-```{r}
+```{r,cache=TRUE}
 
 pred2<-predict(modFit, newdata = data2 )
 
