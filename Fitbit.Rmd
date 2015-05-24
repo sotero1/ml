@@ -22,7 +22,6 @@ datad <- getURL("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-trainin
 datatr<- read.csv(text=datad)
 
 
-summary(datatr)
 
 datat <- getURL("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv",ssl.verifypeer=0L,followlocation=1L)
 
